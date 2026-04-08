@@ -2,6 +2,7 @@
 import './index.css';
 
 const LOGO_URL = "https://alqaheranews.net/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.6a2665e0.png&w=3840&q=75";
+const ANALYTICS_API_BASE_URL = 'https://analytics-api-563127110175.us-central1.run.app';
 
 const TOOLS = [
   {
@@ -20,12 +21,35 @@ const TOOLS = [
     icon: "book-open",
     color: "bg-emerald-500",
   },
+  {
+    id: "analytics",
+    name: "News Analytics",
+    description: "AI-powered insights into content performance and trending topics.",
+    url: "#",
+    icon: "bar-chart-3",
+    color: "bg-purple-500",
+  },
+  {
+    id: "gemini-enterprise",
+    name: "Gemini Enterprise",
+    description: "Enterprise-grade AI search and 2 specialized agents for advanced news workflows.",
+    url: "https://vertexaisearch.cloud.google.com/home/cid/22f41100-1550-4e64-adf8-ca51c79aacf9?hl=en_US",
+    icon: "sparkles",
+    color: "bg-orange-500",
+    isExternalOnly: true,
+  },
 ];
 
 let state = {
   isAuthenticated: localStorage.getItem("aqn_auth") === "true",
   activeView: "home",
   isSidebarOpen: window.innerWidth > 768,
+  analytics: {
+    question: "",
+    result: null,
+    isLoading: false,
+    error: null
+  }
 };
 
 function render() {
@@ -181,7 +205,9 @@ function renderDashboard() {
 
         <!-- Content Area -->
         <div class="flex-1 relative overflow-hidden bg-muted/20">
-          ${state.activeView === 'home' ? renderHomeView() : renderToolView(activeTool)}
+          ${state.activeView === 'home' ? renderHomeView() : 
+            state.activeView === 'analytics' ? renderAnalyticsView() : 
+            renderToolView(activeTool)}
         </div>
       </main>
     </div>
@@ -351,6 +377,146 @@ function renderQuickAction(icon, label) {
   `;
 }
 
+function renderAnalyticsView() {
+  const { question, result, isLoading, error } = state.analytics;
+
+  return `
+    <div class="p-8 h-full overflow-y-auto animate-in fade-in duration-500">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h1 class="text-3xl font-heading font-bold">News Analytics</h1>
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+              <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+              <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">API Online</span>
+            </div>
+          </div>
+          <p class="text-muted-foreground">Ask questions about content performance, trending topics, and editorial impact.</p>
+        </div>
+
+        <div class="bg-card rounded-3xl p-6 shadow-xl border-none space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm font-bold text-muted-foreground uppercase tracking-wider">Ask a Question</label>
+            <div class="flex gap-3">
+              <input 
+                id="analytics-input" 
+                type="text" 
+                placeholder="e.g., What are the trending videos for program Al-Qahera Today?" 
+                class="flex-1 h-12 rounded-xl bg-muted/50 border-none px-4 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                value="${question}"
+              />
+              <button 
+                id="ask-btn" 
+                class="inline-flex items-center justify-center rounded-xl px-6 h-12 bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all disabled:opacity-50"
+                ${isLoading ? 'disabled' : ''}
+              >
+                ${isLoading ? '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>' : 'Analyze'}
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <button class="suggestion-btn text-xs bg-muted hover:bg-muted/80 px-3 py-1.5 rounded-full font-medium transition-all" data-q="What are the top trending videos?">Trending Videos</button>
+            <button class="suggestion-btn text-xs bg-muted hover:bg-muted/80 px-3 py-1.5 rounded-full font-medium transition-all" data-q="Show me the least viewed articles.">Least Viewed</button>
+            <button class="suggestion-btn text-xs bg-muted hover:bg-muted/80 px-3 py-1.5 rounded-full font-medium transition-all" data-q="Engagement for program Al-Qahera Today?">Program Performance</button>
+          </div>
+        </div>
+
+        ${error ? `
+          <div class="bg-destructive/10 border border-destructive/20 rounded-2xl p-4 flex items-center gap-3 text-destructive">
+            <i data-lucide="alert-circle" class="w-5 h-5"></i>
+            <p class="text-sm font-medium">${error}</p>
+          </div>
+        ` : ''}
+
+        ${result ? `
+          <div class="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div class="bg-card rounded-3xl p-8 shadow-lg border-none space-y-4">
+              <div class="flex items-center gap-3 text-primary">
+                <i data-lucide="sparkles" class="w-6 h-6"></i>
+                <h3 class="text-2xl font-heading font-bold">${result.title}</h3>
+              </div>
+              <p class="text-muted-foreground leading-relaxed">${result.summary}</p>
+            </div>
+
+            ${result.data && result.data.length > 0 ? `
+              <div class="bg-card rounded-3xl overflow-hidden shadow-lg border-none">
+                <div class="px-8 py-4 border-b bg-muted/30">
+                  <h4 class="font-bold text-sm uppercase tracking-wider">Detailed Data</h4>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm text-left">
+                    <thead class="bg-muted/50 text-muted-foreground font-bold uppercase text-[10px] tracking-widest">
+                      <tr>
+                        <th class="px-8 py-4">Title</th>
+                        <th class="px-8 py-4">Program</th>
+                        <th class="px-8 py-4 text-right">Views</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y">
+                      ${result.data.map(row => `
+                        <tr class="hover:bg-muted/30 transition-colors">
+                          <td class="px-8 py-4 font-medium">${row.title || 'N/A'}</td>
+                          <td class="px-8 py-4 text-muted-foreground">${row.program || 'N/A'}</td>
+                          <td class="px-8 py-4 text-right font-mono font-bold">${(row.total_views || row.recent_views || 0).toLocaleString()}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `;
+}
+
+async function handleAskAnalytics() {
+  const input = document.getElementById('analytics-input');
+  const question = input ? input.value : state.analytics.question;
+  
+  if (!question) return;
+
+  state.analytics.isLoading = true;
+  state.analytics.error = null;
+  state.analytics.question = question;
+  render();
+
+  try {
+    // We use the external API URL provided by the user
+    const apiUrl = `${ANALYTICS_API_BASE_URL}/api/analytics/ask`;
+    
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question })
+    });
+
+    if (!response.ok) {
+      // Fallback to local API if external fails (useful for development)
+      console.warn("External API failed, trying local fallback...");
+      const fallbackResponse = await fetch('/api/analytics/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+      if (!fallbackResponse.ok) throw new Error('Failed to fetch analytics data');
+      const data = await fallbackResponse.json();
+      state.analytics.result = data;
+    } else {
+      const data = await response.json();
+      state.analytics.result = data;
+    }
+  } catch (err) {
+    console.error("Analytics Error:", err);
+    state.analytics.error = "Could not retrieve analytics. Please ensure BigQuery and Vertex AI are properly configured.";
+  } finally {
+    state.analytics.isLoading = false;
+    render();
+  }
+}
 function renderToolView(tool) {
   return `
     <div class="absolute inset-0 flex flex-col animate-in fade-in duration-300">
@@ -375,7 +541,24 @@ function renderToolView(tool) {
         </div>
       </div>
       <div class="flex-1 bg-white relative">
-        <iframe src="${tool.url}" class="w-full h-full border-none" title="${tool.name}" referrerPolicy="no-referrer"></iframe>
+        ${tool.isExternalOnly ? `
+          <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center space-y-6 bg-muted/10">
+            <div class="w-20 h-20 rounded-3xl ${tool.color} flex items-center justify-center text-white shadow-2xl shadow-primary/20 animate-bounce">
+              <i data-lucide="${tool.icon}" class="w-10 h-10"></i>
+            </div>
+            <div class="max-w-md space-y-2">
+              <h2 class="text-2xl font-heading font-bold">Secure AI Portal</h2>
+              <p class="text-muted-foreground">For security and privacy reasons, Gemini Enterprise must be accessed directly in a secure browser environment.</p>
+            </div>
+            <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl px-8 h-14 bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-all">
+              <i data-lucide="external-link" class="mr-3 w-5 h-5"></i>
+              Open Gemini Enterprise
+            </a>
+            <p class="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Vertex AI Search & Conversation</p>
+          </div>
+        ` : `
+          <iframe src="${tool.url}" class="w-full h-full border-none" title="${tool.name}" referrerPolicy="no-referrer"></iframe>
+        `}
       </div>
     </div>
   `;
@@ -401,6 +584,30 @@ function attachLoginListeners() {
 }
 
 function attachDashboardListeners() {
+  // Analytics Listeners
+  const askBtn = document.getElementById('ask-btn');
+  if (askBtn) {
+    askBtn.addEventListener('click', handleAskAnalytics);
+  }
+
+  const analyticsInput = document.getElementById('analytics-input');
+  if (analyticsInput) {
+    analyticsInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleAskAnalytics();
+    });
+    analyticsInput.addEventListener('input', (e) => {
+      state.analytics.question = e.target.value;
+    });
+  }
+
+  document.querySelectorAll('.suggestion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.getAttribute('data-q');
+      state.analytics.question = q;
+      handleAskAnalytics();
+    });
+  });
+
   // Sidebar Toggle
   const toggle = document.getElementById('sidebar-toggle');
   if (toggle) {
