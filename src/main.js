@@ -17,9 +17,25 @@ const TOOLS = [
     id: "stylebook",
     name: "Style Book",
     description: "Ensure editorial consistency and adherence to Al Qahera News style guidelines.",
-    url: "https://correction-aqn-563127110175.us-central1.run.app",
+    url: "https://al-qahera-news-editor-563127110175.us-west1.run.app/",
     icon: "book-open",
     color: "bg-emerald-500",
+  },
+  {
+    id: "semantic-search",
+    name: "Semantic Search",
+    description: "Video semantic search for rapid media retrieval.",
+    url: "https://aqn-video-semantic-search-563127110175.us-west1.run.app/",
+    icon: "search",
+    color: "bg-amber-500",
+  },
+  {
+    id: "trendings",
+    name: "Trendings",
+    description: "Global news monitoring and trending topics from Reuters and beyond.",
+    url: "https://reuters-me-agent-563127110175.us-west1.run.app",
+    icon: "trending-up",
+    color: "bg-red-500",
   },
   {
     id: "analytics",
@@ -72,51 +88,45 @@ function render() {
 
 function renderLoginPage() {
   return `
-    <div class="min-h-screen w-full flex items-center justify-center bg-muted/30 p-4 relative overflow-hidden">
-      <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      </div>
+    <div class="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden">
+      <!-- Background handled by body styles -->
 
-      <div class="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <div class="bg-card border-none shadow-2xl backdrop-blur-xl overflow-hidden rounded-3xl">
-          <div class="h-2 bg-primary w-full"></div>
+      <div class="w-full max-w-md relative z-10 animate-in fade-in duration-500">
+        <div class="hero-box overflow-hidden rounded-[30px]">
           <div class="p-10 text-center space-y-4">
-            <div class="mx-auto w-20 h-20 bg-primary rounded-2xl flex items-center justify-center shadow-xl shadow-primary/20 mb-2">
-              <img src="${LOGO_URL}" alt="Logo" class="w-14 h-14 object-contain brightness-0 invert" />
+            <div class="brand-logo mx-auto mb-2">
+              <img src="${LOGO_URL}" alt="Logo" class="w-10 h-10 object-contain brightness-0 invert" />
             </div>
-            <div class="space-y-2">
-              <h1 class="text-3xl font-heading font-bold">Editorial Login</h1>
-              <p class="text-muted-foreground text-base">Access the Al Qahera News internal dashboard</p>
+            <div class="space-y-1">
+              <h1 class="text-3xl font-bold text-[#111]">Secure Login</h1>
+              <p class="text-[#666] text-sm font-medium">Internal Editorial Suite Access</p>
             </div>
           </div>
           <div class="px-8 pb-10">
-            <form id="login-form" class="space-y-6">
+            <form id="login-form" class="space-y-5">
               <div class="space-y-2">
-                <label class="text-sm font-medium leading-none" for="username">Username</label>
+                <label class="text-xs font-bold text-[#111] uppercase tracking-widest pl-1" for="username">User Identity</label>
                 <div class="relative">
-                  <i data-lucide="user" class="absolute left-3 top-3 w-4 h-4 text-muted-foreground"></i>
-                  <input id="username" name="username" placeholder="admin" class="flex h-11 w-full rounded-xl bg-muted/50 border-none px-10 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" required />
+                  <i data-lucide="user" class="absolute left-4 top-4.5 w-4 h-4 text-[#888]"></i>
+                  <input id="username" name="username" placeholder="admin" class="flex h-14 w-full rounded-2xl bg-white border border-[#eee] px-11 py-2 text-sm focus:border-[#c40000] focus:ring-4 focus:ring-[#c40000]/10 transition-all outline-none" required />
                 </div>
               </div>
               <div class="space-y-2">
                 <div class="flex items-center justify-between">
-                  <label class="text-sm font-medium leading-none" for="password">Password</label>
-                  <button type="button" class="text-xs text-muted-foreground hover:underline">Forgot password?</button>
+                  <label class="text-xs font-bold text-[#111] uppercase tracking-widest pl-1" for="password">Security Code</label>
                 </div>
                 <div class="relative">
-                  <i data-lucide="lock" class="absolute left-3 top-3 w-4 h-4 text-muted-foreground"></i>
-                  <input id="password" name="password" type="password" placeholder="••••••••" class="flex h-11 w-full rounded-xl bg-muted/50 border-none px-10 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary" required />
+                  <i data-lucide="lock" class="absolute left-4 top-4.5 w-4 h-4 text-[#888]"></i>
+                  <input id="password" name="password" type="password" placeholder="••••••••" class="flex h-14 w-full rounded-2xl bg-white border border-[#eee] px-11 py-2 text-sm focus:border-[#c40000] focus:ring-4 focus:ring-[#c40000]/10 transition-all outline-none" required />
                 </div>
               </div>
-              <button type="submit" class="inline-flex items-center justify-center w-full h-12 rounded-xl bg-primary text-primary-foreground text-lg font-bold shadow-lg shadow-primary/20 transition-all active:scale-[0.98] hover:opacity-90">
-                Sign In
+              <button type="submit" class="w-full btn-primary h-14 rounded-2xl text-lg font-black shadow-xl shadow-[#c40000]/20 transition-all active:scale-95">
+                Authenticate
               </button>
             </form>
             <div class="mt-8 text-center">
-              <p class="text-xs text-muted-foreground">
-                Authorized Personnel Only. <br />
-                All activities are logged and monitored.
+              <p class="text-[10px] text-[#777] font-bold uppercase tracking-widest">
+                System Monitoring Active &bull; AuthRequired
               </p>
             </div>
           </div>
@@ -129,82 +139,53 @@ function renderLoginPage() {
 function renderDashboard() {
   const activeTool = TOOLS.find(t => t.id === state.activeView);
   const sidebarWidth = state.isSidebarOpen ? '280px' : '80px';
+  const isHome = state.activeView === 'home';
 
   return `
-    <div class="flex h-screen w-full bg-background overflow-hidden">
-      <!-- Desktop Sidebar -->
-      <aside id="sidebar" class="hidden md:flex flex-col border-r bg-card relative z-20 shadow-xl transition-all duration-300" style="width: ${sidebarWidth}">
+    <div class="flex h-screen w-full transition-all duration-500 overflow-hidden ${isHome ? 'bg-transparent' : 'bg-background'}">
+      <!-- Desktop Sidebar (Hidden on Home if desired, but we'll keep it as a minimal anchor) -->
+      <aside id="sidebar" class="hidden md:flex flex-col border-r bg-card relative z-30 shadow-xl transition-all duration-300 ${isHome ? 'opacity-0 -translate-x-full pointer-events-none' : ''}" style="width: ${sidebarWidth}">
         <div class="p-6 flex items-center gap-3">
-          <div class="w-10 h-10 flex-shrink-0 bg-primary rounded-lg flex items-center justify-center overflow-hidden shadow-lg shadow-primary/20">
+          <div class="brand-logo">
             <img src="${LOGO_URL}" alt="Logo" class="w-8 h-8 object-contain brightness-0 invert" />
           </div>
-          ${state.isSidebarOpen ? `<span class="font-heading font-bold text-lg tracking-tight whitespace-nowrap animate-in fade-in slide-in-from-left-2">Al Qahera News</span>` : ''}
+          ${state.isSidebarOpen ? `<span class="font-bold text-lg tracking-tight whitespace-nowrap animate-in fade-in">AQN Editor</span>` : ''}
         </div>
 
         <div class="flex-1 overflow-y-auto px-4">
           <nav class="space-y-2 py-4">
             ${renderNavItem('home', 'layout-dashboard', 'Dashboard')}
-            
-            <div class="pt-6 pb-2">
-              ${state.isSidebarOpen ? `<p class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-4 mb-2">Editorial Tools</p>` : `<div class="h-px bg-border mx-2"></div>`}
-            </div>
-
+            <div class="h-px bg-border my-4"></div>
             ${TOOLS.map(tool => renderNavItem(tool.id, tool.icon, tool.name)).join('')}
           </nav>
         </div>
 
-        <div class="p-4 border-t space-y-2">
-          ${renderNavItem('settings', 'settings', 'Settings')}
-          <button id="logout-btn" class="flex items-center gap-4 w-full h-11 px-4 rounded-xl text-destructive hover:bg-destructive/10 transition-all">
+        <div class="p-4 border-t">
+          <button id="logout-btn" class="flex items-center justify-center gap-4 w-full h-11 rounded-xl text-destructive hover:bg-destructive/10 transition-all">
             <i data-lucide="log-out" class="w-5 h-5"></i>
             ${state.isSidebarOpen ? `<span class="font-bold text-sm">Logout</span>` : ''}
-          </button>
-          
-          <button id="sidebar-toggle" class="absolute -right-3 top-20 bg-background border rounded-full shadow-md z-30 hover:scale-110 transition-transform p-1">
-            <i data-lucide="chevron-right" class="w-4 h-4 transition-transform ${state.isSidebarOpen ? 'rotate-180' : ''}"></i>
           </button>
         </div>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 flex flex-col min-w-0">
-        <!-- Top Bar -->
-        <header class="h-16 border-b flex items-center justify-between px-8 bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-          <div class="flex items-center gap-4">
-            <h2 class="text-xl font-heading font-bold">
-              ${state.activeView === 'home' ? 'Editorial Overview' : activeTool.name}
-            </h2>
-            ${state.activeView !== 'home' ? `
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
-                <div class="w-1.5 h-1.5 rounded-full ${activeTool.color}"></div>
-                Internal Tool
-              </span>
-            ` : ''}
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="hidden lg:flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-xs font-medium">
-              <i data-lucide="clock" class="w-3.5 h-3.5"></i>
-              ${new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+      <main class="flex-1 flex flex-col min-w-0 relative z-10 overflow-y-auto ${isHome ? '' : 'bg-muted/10'}">
+        ${isHome ? '' : `
+          <header class="h-16 border-b flex items-center justify-between px-8 bg-card shadow-sm sticky top-0 z-20">
+            <div class="flex items-center gap-4">
+              <button class="md:hidden p-2 hover:bg-muted rounded-lg mr-2" id="mobile-toggle">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+              </button>
+              <h2 class="text-xl font-bold">${activeTool ? activeTool.name : ''}</h2>
             </div>
-            <button class="relative p-2 hover:bg-muted rounded-full">
-              <i data-lucide="bell" class="w-5 h-5"></i>
-              <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full border-2 border-background animate-pulse"></span>
+            <button class="p-2 hover:bg-muted rounded-full" onclick="window.switchView('home')">
+              <i data-lucide="x" class="w-5 h-5"></i>
             </button>
-            <div class="h-6 w-px bg-border"></div>
-            <div class="flex items-center gap-3">
-              <div class="text-right hidden sm:block">
-                <p class="text-sm font-bold">Admin Editor</p>
-                <p class="text-[10px] text-muted-foreground uppercase tracking-tighter">Chief Administrator</p>
-              </div>
-              <div class="w-9 h-9 rounded-full bg-primary shadow-inner flex items-center justify-center text-primary-foreground font-bold text-sm ring-2 ring-primary/20">
-                AD
-              </div>
-            </div>
-          </div>
-        </header>
+          </header>
+        `}
 
         <!-- Content Area -->
-        <div class="flex-1 relative overflow-hidden bg-muted/20">
+        <div class="flex-1 relative">
           ${state.activeView === 'home' ? renderHomeView() : 
             state.activeView === 'analytics' ? renderAnalyticsView() : 
             renderToolView(activeTool)}
@@ -231,103 +212,81 @@ function renderNavItem(id, icon, label) {
 
 function renderHomeView() {
   return `
-    <div class="p-8 h-full overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div class="max-w-6xl mx-auto space-y-8">
-        <!-- Hero Section -->
-        <div class="relative overflow-hidden rounded-3xl bg-primary p-8 md:p-12 text-primary-foreground shadow-2xl shadow-primary/20">
-          <div class="relative z-10 max-w-2xl">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white mb-4 backdrop-blur-md">Editorial Suite v2.4</span>
-            <h1 class="text-4xl md:text-5xl font-heading font-bold mb-4 leading-tight">Empowering the Future of News Production</h1>
-            <p class="text-primary-foreground/80 text-lg mb-8">Welcome back, Admin. Your editorial tools are ready. Streamline your workflow with AI-powered content atomization and style consistency checks.</p>
-            <div class="flex flex-wrap gap-4">
-              <button class="inline-flex items-center justify-center rounded-full px-8 h-11 bg-secondary text-secondary-foreground font-medium hover:opacity-90 transition-all" onclick="window.switchView('atomizer')">
-                Get Started
-              </button>
-              <button class="inline-flex items-center justify-center rounded-full px-8 h-11 bg-transparent border border-white/30 text-white font-medium hover:bg-white/10 transition-all">
-                View Documentation
-              </button>
-            </div>
+    <div class="page-container animate-in fade-in duration-700">
+      <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-10 text-white">
+        <div class="flex items-center gap-4">
+          <div class="brand-logo text-white font-black text-2xl">
+            <img src="${LOGO_URL}" alt="AQN" class="w-10 h-10 object-contain brightness-0 invert" />
           </div>
-          <div class="absolute -right-20 -top-20 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-          <div class="absolute -right-10 -bottom-20 w-64 h-64 bg-black/10 rounded-full blur-2xl"></div>
-        </div>
-
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          ${renderStatCard('file-text', 'Total Stories', '1,284', '+12%', 'text-blue-500')}
-          ${renderStatCard('trending-up', 'Engagement', '84.2k', '+5.4%', 'text-emerald-500')}
-          ${renderStatCard('users', 'Active Editors', '42', '0%', 'text-purple-500')}
-          ${renderStatCard('check-circle-2', 'Style Score', '98%', '+2%', 'text-orange-500')}
-        </div>
-
-        <!-- Tools Bento Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="md:col-span-2 group hover:shadow-2xl transition-all duration-500 bg-card rounded-3xl p-8 overflow-hidden relative">
-            <div class="flex items-center justify-between mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform duration-500">
-                <i data-lucide="atom" class="w-6 h-6"></i>
-              </div>
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-medium border border-blue-500/20 text-blue-500">Advanced AI</span>
-            </div>
-            <h3 class="text-3xl font-heading font-bold mb-2">Content Atomizer</h3>
-            <p class="text-muted-foreground text-base max-w-md mb-6">Our flagship tool for breaking down long-form journalism into multi-platform atomic content.</p>
-            <div class="flex items-center gap-4 mb-6">
-              <div class="flex -space-x-2">
-                ${[1, 2, 3, 4].map(i => `<div class="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold">${String.fromCharCode(64 + i)}</div>`).join('')}
-              </div>
-              <span class="text-xs text-muted-foreground font-medium">Used by 12 editors today</span>
-            </div>
-            <button class="w-full bg-blue-500 hover:bg-blue-600 text-white rounded-xl h-12 font-bold transition-all" onclick="window.switchView('atomizer')">
-              Launch Atomizer Suite
-              <i data-lucide="chevron-right" class="inline-block ml-2 w-4 h-4"></i>
-            </button>
-          </div>
-
-          <div class="group hover:shadow-2xl transition-all duration-500 bg-card rounded-3xl p-8 overflow-hidden relative">
-            <div class="flex items-center justify-between mb-4">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 group-hover:scale-110 transition-transform duration-500">
-                <i data-lucide="book-open" class="w-6 h-6"></i>
-              </div>
-            </div>
-            <h3 class="text-2xl font-heading font-bold mb-2">Style Book</h3>
-            <p class="text-muted-foreground text-sm mb-6">Maintain the Al Qahera standard across all publications.</p>
-            <ul class="space-y-3 mb-6">
-              ${['Grammar & Syntax', 'Brand Voice Check', 'Fact Verification'].map(item => `
-                <li class="flex items-center gap-2 text-xs font-medium text-muted-foreground">
-                  <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-500"></i>
-                  ${item}
-                </li>
-              `).join('')}
-            </ul>
-            <button class="w-full border border-emerald-500/20 hover:bg-emerald-500 hover:text-white rounded-xl h-12 font-bold transition-all" onclick="window.switchView('stylebook')">
-              Open Style Book
-            </button>
+          <div>
+            <h1 class="text-2xl font-bold leading-tight">Al Qahera News</h1>
+            <p class="text-white/60 text-sm mt-1">Editorial Management Portal</p>
           </div>
         </div>
+        <div class="glass-badge flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+          Secure Editorial Environment
+        </div>
+      </header>
 
-        <!-- Activity Feed -->
-        <section class="pt-4 pb-12">
-          <div class="flex items-center justify-between mb-6">
-            <h3 class="text-2xl font-heading font-bold">Live Editorial Feed</h3>
-            <button class="text-primary font-bold hover:underline">View All</button>
+      <section class="hero-box mb-6">
+        <h2 class="text-4xl font-bold mb-3 text-[#111]">
+          Welcome to <span>Editorial Hub</span>
+        </h2>
+        <p class="text-[#666] leading-relaxed mb-8 max-w-3xl text-lg">
+          Empowering the newsroom with AI-driven content generation, semantic media search, and multi-platform trending analysis. Select a tool below to begin your editorial workflow.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <div class="md:col-span-3">
+            <select id="module-selector" class="w-full h-16 px-6 border border-[#ddd] bg-[#fafafa] rounded-2xl cursor-pointer outline-none focus:border-[#c40000] focus:ring-4 focus:ring-[#c40000]/10 transition-all font-bold text-[#111]">
+              <option value="" disabled selected>Select an Editorial Module...</option>
+              ${TOOLS.map(tool => `<option value="${tool.id}">${tool.name}</option>`).join('')}
+            </select>
           </div>
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 space-y-4">
-              ${renderActivityItem('atom', 'Story Atomized', 'Global Climate Summit coverage processed into 12 social posts.', '14m ago', 'Completed', 'text-blue-500')}
-              ${renderActivityItem('book-open', 'Style Review', 'Editorial review completed for \'Economic Outlook 2026\'.', '1h ago', 'Approved', 'text-emerald-500')}
-              ${renderActivityItem('alert-circle', 'System Alert', 'High traffic detected on \'Regional Conflict\' live blog.', '3h ago', 'Active', 'text-orange-500')}
-            </div>
-            <div class="bg-card rounded-3xl p-6 shadow-lg border-none">
-              <h4 class="text-lg font-bold mb-4">Quick Actions</h4>
-              <div class="space-y-2">
-                ${renderQuickAction('file-text', 'New Story Draft')}
-                ${renderQuickAction('users', 'Manage Team')}
-                ${renderQuickAction('trending-up', 'Analytics Report')}
-              </div>
-            </div>
-          </div>
-        </section>
+          <button id="launch-wizard" class="btn-primary py-4 px-8 rounded-2xl shadow-xl shadow-[#c40000]/20 active:scale-95 transition-all h-16">
+            Launch
+          </button>
+        </div>
+      </section>
+
+      <div class="mb-4 text-[#555] font-medium px-2">
+        Available Editorial Modules (${TOOLS.length})
       </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        ${TOOLS.map(tool => `
+          <div class="custom-card group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="flex justify-between items-start gap-4 mb-4">
+              <h3 class="text-xl font-extrabold text-[#111] leading-tight">${tool.name}</h3>
+              <div class="bg-[#111] text-white px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap">
+                v1.2
+              </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="bg-[#f5f5f5] border border-[#eee] rounded-full px-3 py-1.5 text-xs text-[#555] flex items-center gap-1.5 font-medium">
+                <i data-lucide="${tool.icon}" class="w-3.5 h-3.5"></i>
+                AI Enabled
+              </span>
+              <span class="bg-[#f5f5f5] border border-[#eee] rounded-full px-3 py-1.5 text-xs text-[#555] font-medium">Internal</span>
+            </div>
+
+            <div class="bg-[#fafafa] border border-[#eee] p-4 rounded-xl text-sm leading-relaxed text-[#333] mb-4 min-h-[80px]">
+              ${tool.description}
+            </div>
+
+            <button class="w-full btn-primary py-3 px-4 rounded-xl text-sm font-black active:scale-95 flex items-center justify-center gap-2" onclick="window.switchView('${tool.id}')">
+              Open Module
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        `).join('')}
+      </div>
+
+      <footer class="mt-12 text-center text-[#777] text-xs font-medium pb-8 uppercase tracking-widest">
+        Powered by Cloud 11 Google cloud premier partner
+      </footer>
     </div>
   `;
 }
@@ -518,25 +477,29 @@ async function handleAskAnalytics() {
   }
 }
 function renderToolView(tool) {
+  if (!tool) return '';
   return `
-    <div class="absolute inset-0 flex flex-col animate-in fade-in duration-300">
-      <div class="bg-background/80 backdrop-blur-md px-8 py-3 flex items-center justify-between border-b z-10">
+    <div class="flex flex-col h-full animate-in fade-in duration-300">
+      <div class="h-16 border-b flex items-center justify-between px-8 bg-white backdrop-blur-md sticky top-0 z-20 shadow-sm">
         <div class="flex items-center gap-4">
-          <div class="w-8 h-8 rounded-lg ${tool.color} flex items-center justify-center text-white shadow-lg shadow-primary/10">
-            <i data-lucide="${tool.icon}" class="w-4 h-4"></i>
+          <button class="md:hidden p-2 hover:bg-[#f5f5f5] rounded-xl" id="tool-mobile-toggle">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+          <div class="w-10 h-10 rounded-xl ${tool.color} flex items-center justify-center text-white shadow-lg">
+            <i data-lucide="${tool.icon}" class="w-5 h-5"></i>
           </div>
-          <div class="flex flex-col">
-            <span class="text-sm font-bold leading-none mb-1">${tool.name}</span>
-            <code class="text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded border">${tool.url}</code>
+          <div class="hidden sm:flex flex-col">
+            <span class="text-sm font-black text-[#111] leading-tight">${tool.name}</span>
+            <code class="text-[9px] text-[#888] font-bold uppercase tracking-widest mt-0.5">${tool.url.substring(0, 50)}...</code>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full px-4 h-8 border text-xs font-medium hover:bg-muted transition-all">
+        <div class="flex items-center gap-4">
+          <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl px-4 h-10 border border-[#eee] bg-[#fafafa] text-xs font-black text-[#111] hover:border-[#c40000] hover:text-[#c40000] transition-all">
             <i data-lucide="external-link" class="mr-2 w-3.5 h-3.5"></i>
             External View
           </a>
-          <button class="p-1.5 hover:bg-muted rounded-full" onclick="window.switchView('home')">
-            <i data-lucide="x" class="w-5 h-5"></i>
+          <button class="p-2 hover:bg-[#f5f5f5] rounded-full transition-colors" onclick="window.switchView('home')">
+            <i data-lucide="x" class="w-5 h-5 text-[#111]"></i>
           </button>
         </div>
       </div>
@@ -547,17 +510,17 @@ function renderToolView(tool) {
               <i data-lucide="${tool.icon}" class="w-10 h-10"></i>
             </div>
             <div class="max-w-md space-y-2">
-              <h2 class="text-2xl font-heading font-bold">Secure AI Portal</h2>
-              <p class="text-muted-foreground">For security and privacy reasons, Gemini Enterprise must be accessed directly in a secure browser environment.</p>
+              <h2 class="text-2xl font-bold text-[#111]">Secure Portal Access</h2>
+              <p class="text-[#666]">Due to high-security protocols, this enterprise resource must be accessed in a standalone browser environment.</p>
             </div>
-            <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl px-8 h-14 bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-all">
-              <i data-lucide="external-link" class="mr-3 w-5 h-5"></i>
-              Open Gemini Enterprise
+            <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center rounded-2xl px-10 h-16 text-lg font-black shadow-2xl">
+              <i data-lucide="external-link" class="mr-3 w-6 h-6"></i>
+              Launch Secure Session
             </a>
-            <p class="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Vertex AI Search & Conversation</p>
+            <p class="text-[10px] text-[#888] uppercase tracking-widest font-black pt-4">Cloud Verified Source</p>
           </div>
         ` : `
-          <iframe src="${tool.url}" class="w-full h-full border-none" title="${tool.name}" referrerPolicy="no-referrer"></iframe>
+          <iframe src="${tool.url}" class="w-full h-full border-none bg-white font-sans" title="${tool.name}" referrerPolicy="no-referrer"></iframe>
         `}
       </div>
     </div>
@@ -584,6 +547,33 @@ function attachLoginListeners() {
 }
 
 function attachDashboardListeners() {
+  // Wizard Launch Listener
+  const launchBtn = document.getElementById('launch-wizard');
+  const moduleSelector = document.getElementById('module-selector');
+  if (launchBtn && moduleSelector) {
+    launchBtn.addEventListener('click', () => {
+      const selectedId = moduleSelector.value;
+      if (selectedId) {
+        window.switchView(selectedId);
+      } else {
+        moduleSelector.classList.add('animate-shake');
+        setTimeout(() => moduleSelector.classList.remove('animate-shake'), 500);
+      }
+    });
+  }
+
+  // Mobile Toggles
+  const handleMobileToggle = () => {
+    state.isSidebarOpen = !state.isSidebarOpen;
+    render();
+  };
+
+  const mobileToggle = document.getElementById('mobile-toggle');
+  if (mobileToggle) mobileToggle.addEventListener('click', handleMobileToggle);
+  
+  const toolMobileToggle = document.getElementById('tool-mobile-toggle');
+  if (toolMobileToggle) toolMobileToggle.addEventListener('click', handleMobileToggle);
+
   // Analytics Listeners
   const askBtn = document.getElementById('ask-btn');
   if (askBtn) {
