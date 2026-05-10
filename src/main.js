@@ -25,7 +25,7 @@ const TOOLS = [
     id: "semantic-search",
     name: "Semantic Search",
     description: "Video semantic search for rapid media retrieval.",
-    url: "https://aqn-video-semantic-search-563127110175.us-west1.run.app/",
+    url: "https://aqn-semantic-search-frontend-563127110175.us-central1.run.app/",
     icon: "search",
     color: "bg-amber-500",
   },
